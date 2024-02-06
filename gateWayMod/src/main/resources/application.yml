@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: harshit-api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: harshit-login
+          uri: lb://harshit-login
+          predicates:
+          - Path=/auth/**
+        - id: harshit-dashboard
+          uri: lb://harshit-dashboard
+          predicates:
+          - Path=/dashboard/**
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+          corsConfigurations:
+            '[/**]':
+              allowedOrigins: "*"
+              allowedMethods: "*"
+              allowedHeaders: "*"
+server:
+  port: 9093
+eureka:
+  instance:
+    hostname: localhost
